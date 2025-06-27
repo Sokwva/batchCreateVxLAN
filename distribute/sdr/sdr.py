@@ -121,11 +121,14 @@ def configure_vxlan_bgp_evpn_distribute_sdr(
                 require_veth = vrf_conf.get("InOutVethRequire", False)
 
                 # 创建/更新vrf
-                if any(key in vrf_change_info["changed_fields"] for key in ["VRFName","VRFRouteTableID"]):
+                if any(
+                    key in vrf_change_info["changed_fields"]
+                    for key in ["VRFName", "VRFRouteTableID"]
+                ):
                     if not create_vrf(ipr, rollback, vrf_name, vrf_table_id):
                         return False
 
-                # 创建/更新L3 
+                # 创建/更新L3
                 if "VxLANL3VNI" in vrf_change_info["changed_fields"]:
                     l3_vxlan_ifname = create_vxlan_interface(
                         ipr, rollback, l3_vni, underlay_ip
@@ -182,7 +185,7 @@ def configure_vxlan_bgp_evpn_distribute_sdr(
                     return False
 
                 # 删除IP地址
-                if not unassign_ip_address(
+                if vlan_conf["L2VxLANVNIIPAddr"] != "" and not unassign_ip_address(
                     ipr, rollback, l2_br_name, vlan_conf["L2VxLANVNIIPAddr"]
                 ):
                     return False
@@ -237,12 +240,12 @@ def configure_vxlan_bgp_evpn_distribute_sdr(
                     return False
 
                 # 设置MAC和IP
-                if not set_mac_address(
+                if vlan_conf["L2VxLANVNIMacAddr"] != "" and not set_mac_address(
                     ipr, rollback, l2_br_name, vlan_conf["L2VxLANVNIMacAddr"]
                 ):
                     return False
 
-                if not assign_ip_address(
+                if vlan_conf["L2VxLANVNIIPAddr"] and not assign_ip_address(
                     ipr, rollback, l2_br_name, vlan_conf["L2VxLANVNIIPAddr"]
                 ):
                     return False
@@ -360,12 +363,12 @@ def configure_vxlan_bgp_evpn_distribute_sdr(
                     return False
 
                 # 设置MAC和IP
-                if not set_mac_address(
+                if vlan_conf["L2VxLANVNIMacAddr"] != "" and not set_mac_address(
                     ipr, rollback, l2_br_name, vlan_conf["L2VxLANVNIMacAddr"]
                 ):
                     return False
 
-                if not assign_ip_address(
+                if vlan_conf["L2VxLANVNIIPAddr"] != "" and not assign_ip_address(
                     ipr, rollback, l2_br_name, vlan_conf["L2VxLANVNIIPAddr"]
                 ):
                     return False

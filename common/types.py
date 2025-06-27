@@ -83,19 +83,19 @@ def validate_config(conf: EnvConf) -> bool:
             )
             return False
 
-        if (
-            not vlan_conf["L2VxLANVNIIPAddr"]
-            or "/" not in vlan_conf["L2VxLANVNIIPAddr"]
-        ):
-            print(f"Error: Invalid L2VxLANVNIIPAddr {vlan_conf['L2VxLANVNIIPAddr']}")
-            return False
+        # if (
+        #     not vlan_conf["L2VxLANVNIIPAddr"]
+        #     or "/" not in vlan_conf["L2VxLANVNIIPAddr"]
+        # ):
+        #     print(f"Error: Invalid L2VxLANVNIIPAddr {vlan_conf['L2VxLANVNIIPAddr']}")
+        #     return False
 
-        if (
-            not vlan_conf["L2VxLANVNIMacAddr"]
-            or len(vlan_conf["L2VxLANVNIMacAddr"].split(":")) != 6
-        ):
-            print(f"Error: Invalid L2VxLANVNIMacAddr {vlan_conf['L2VxLANVNIMacAddr']}")
-            return False
+        # if (
+        #     not vlan_conf["L2VxLANVNIMacAddr"]
+        #     or len(vlan_conf["L2VxLANVNIMacAddr"].split(":")) != 6
+        # ):
+        #     print(f"Error: Invalid L2VxLANVNIMacAddr {vlan_conf['L2VxLANVNIMacAddr']}")
+        #     return False
 
     # 检查VRFMapL3VNI
     if not conf.get("VRFMapL3VNI") or not isinstance(conf["VRFMapL3VNI"], list):
